@@ -1,0 +1,441 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Using a clean, modern font for readability */
+    margin: 0; /* Removing default margin */
+    padding: 0; /* Removing default padding */
+    line-height: 1.6; /* Ensuring consistent line height */
+    background-color: #f0f0f5; /* Setting a light background color for a soft look */
+    color: #333; /* Dark text color for good contrast */
+}
+
+/* Header Styles */
+header {
+    position: relative; /* Allows for positioning of child elements */
+    width: 100%; /* Header spans the full width of the page */
+    background-color: #282c34; /* Dark background for header to match the site's theme */
+    text-align: center; /* Centering content within the header */
+    padding: 0; /* No padding needed here */
+    margin-bottom: 20px; /* Adding some space below the header */
+}
+
+/* CSS for the site logo acting as a banner */
+#site-logo {
+    width: 100%; /* Making the logo stretch across the entire header */
+    height: auto; /* Keeping the logo's aspect ratio */
+    max-height: 200px; /* Limiting the height to prevent it from being too large */
+    object-fit: cover; /* Ensuring the logo covers the space nicely */
+    display: block; /* Displaying the logo as a block-level element */
+    margin: 0 auto; /* Centering the logo horizontally */
+}
+
+/* Sticky Navigation Bar */
+nav {
+    background: linear-gradient(to right, #282c34, #3a3f47); /* Adding a subtle gradient to the nav bar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adding a shadow for some depth */
+    padding: 10px 0; /* Padding to give space around the links */
+    position: -webkit-sticky; /* Ensuring the nav bar sticks at the top of the page (Safari) */
+    position: sticky; /* Sticky positioning for modern browsers */
+    top: 0; /* Sticks to the top of the viewport */
+    z-index: 1000; /* Ensuring it stays above other content */
+    /* For more on sticky navigation bars: https://www.w3schools.com/howto/howto_js_navbar_sticky.asp */
+}
+
+/* Navigation Links */
+nav ul {
+    list-style: none; /* Removing default bullet points */
+    padding: 0; /* No padding needed */
+    display: flex; /* Using flexbox for easy alignment of nav items */
+    justify-content: center; /* Centering the nav items horizontally */
+    gap: 25px; /* Spacing between each nav item */
+    margin: 0; /* Removing default margin */
+    /* Flexbox reference: https://www.w3schools.com/css/css3_flexbox.asp */
+}
+
+nav ul li {
+    position: relative; /* For the hover effect on the links */
+}
+
+nav ul li a {
+    color: #fff; /* White text for contrast */
+    text-decoration: none; /* Removing default underline */
+    font-weight: bold; /* Bold text for emphasis */
+    padding: 10px 15px; /* Adding padding for a larger clickable area */
+    border-radius: 5px; /* Rounded corners for a softer look */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    /* Transition effects reference: https://www.w3schools.com/css/css3_transitions.asp */
+}
+
+/* Adding an underline effect on hover */
+nav ul li a::before {
+    content: ''; /* Required to add a pseudo-element */
+    position: absolute; /* Positioned relative to the link */
+    width: 0; /* Initial width of the underline */
+    height: 3px; /* Thickness of the underline */
+    bottom: -5px; /* Positioned just below the text */
+    left: 50%; /* Start from the middle */
+    background-color: #61dafb; /* Blue underline for hover */
+    transition: width 0.3s ease, left 0.3s ease; /* Smooth animation for the underline */
+    /* Pseudo-elements reference: https://www.w3schools.com/css/css_pseudo_elements.asp */
+}
+
+/* Expanding the underline on hover */
+nav ul li a:hover::before {
+    width: 100%; /* Full width on hover */
+    left: 0; /* Align with the start of the text */
+}
+
+/* Changing color and slightly moving the link on hover */
+nav ul li a:hover {
+    color: #61dafb; /* Changing text color on hover */
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+/* Active link styling */
+nav ul li a.active {
+    color: #61dafb; /* Highlighting the active page link */
+    border-bottom: 3px solid #61dafb; /* Persistent underline for the active link */
+}
+
+/* Back to Top Button */
+#back-to-top {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position at the bottom right */
+    bottom: 30px; /* Positioned 30px from the bottom */
+    right: 30px; /* Positioned 30px from the right */
+    background-color: #61dafb; /* Blue background to match theme */
+    color: #fff; /* White text for contrast */
+    padding: 10px 15px; /* Padding for a larger clickable area */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1.2em; /* Slightly larger text */
+    cursor: pointer; /* Pointer cursor to indicate it's clickable */
+    z-index: 1001; /* Ensuring it appears above other content */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    /* For back to top button reference: https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */
+}
+
+#back-to-top:hover {
+    background-color: #4ba3cc; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+/* Main Content Styles */
+main {
+    padding: 30px 20px; /* Padding around the main content */
+    max-width: 1200px; /* Maximum width for readability */
+    margin: auto; /* Centering the main content */
+}
+
+/* Intro Section Styles */
+#intro {
+    background-color: #e2e2e2; /* Light grey background for contrast */
+    padding: 25px; /* Padding around the content */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    margin-bottom: 30px; /* Spacing below the section */
+    text-align: center; /* Centering text */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adding a shadow for depth */
+    animation: slideIn 1.2s ease-in-out; /* Smooth slide-in effect for visibility */
+    /* Animation reference: https://www.w3schools.com/css/css3_animations.asp */
+}
+
+#intro h2 {
+    margin-top: 0; /* Removing default margin */
+    font-size: 2em; /* Larger font size for emphasis */
+    color: #282c34; /* Dark text for contrast */
+}
+
+#intro p {
+    font-size: 1.2em; /* Slightly larger font for readability */
+    color: #555; /* Grey text for a softer look */
+}
+
+/* Fundraisers Section Styles */
+#fundraisers {
+    margin-top: 30px; /* Adding space above the section */
+}
+
+#fundraiser-list {
+    display: flex; /* Flexbox for flexible layouts */
+    flex-wrap: wrap; /* Allowing items to wrap onto multiple lines */
+    gap: 20px; /* Spacing between items */
+    justify-content: center; /* Centering the items */
+}
+
+/* Fundraiser Item Styles */
+.fundraiser-item {
+    background-color: #fff; /* White background for contrast */
+    border: 1px solid #ccc; /* Light grey border for separation */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    padding: 20px; /* Padding inside the items */
+    flex: 1 1 calc(33% - 40px); /* Flexible width for responsiveness */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Adding a shadow for depth */
+    text-align: center; /* Centering text inside items */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.fundraiser-item h3 {
+    margin-top: 0; /* Removing default margin */
+    color: #282c34; /* Dark text for contrast */
+    font-size: 1.5em; /* Larger font size for emphasis */
+}
+
+.fundraiser-item p {
+    color: #666; /* Grey text for a softer look */
+    margin-bottom: 15px; /* Spacing below paragraphs */
+}
+
+.fundraiser-item:hover {
+    transform: translateY(-10px); /* Slight upward movement on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Contact Us Section Styles */
+#contact-us {
+    background-color: #fff; /* White background for contrast */
+    padding: 40px; /* Padding inside the section */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adding a shadow for depth */
+    max-width: 800px; /* Limiting the width for readability */
+    margin: 20px auto; /* Centering the section */
+    text-align: center; /* Centering text */
+}
+
+#contact-us h2 {
+    font-size: 2.5em; /* Larger font size for emphasis */
+    margin-bottom: 20px; /* Spacing below the heading */
+    color: #282c34; /* Dark text for contrast */
+}
+
+#contact-us p {
+    font-size: 1.2em; /* Slightly larger font for readability */
+    color: #555; /* Grey text for a softer look */
+    margin-bottom: 30px; /* Spacing below the paragraph */
+}
+
+/* Styling the form groups */
+.form-group {
+    margin-bottom: 20px; /* Spacing between form elements */
+    text-align: left; /* Aligning labels and inputs to the left */
+}
+
+.form-group label {
+    display: block; /* Ensuring the label takes up full width */
+    margin-bottom: 8px; /* Spacing below the label */
+    font-weight: bold; /* Bold text for labels */
+    color: #282c34; /* Dark text for contrast */
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%; /* Full width inputs and textareas */
+    padding: 10px; /* Padding inside the fields */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    font-size: 1em; /* Standard font size */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus effects */
+}
+
+/* Focus effects for form fields */
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #61dafb; /* Blue border on focus */
+    box-shadow: 0 0 8px rgba(97, 218, 251, 0.5); /* Blue glow on focus */
+    outline: none; /* Removing default outline */
+}
+
+/* Submit Button Styles */
+button[type="submit"] {
+    background-color: #61dafb; /* Blue background to match the theme */
+    color: #fff; /* White text for contrast */
+    padding: 12px 20px; /* Padding around the button */
+    border: none; /* Removing default border */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    font-size: 1.2em; /* Slightly larger text for emphasis */
+    cursor: pointer; /* Pointer cursor to indicate it's clickable */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+button[type="submit"]:hover {
+    background-color: #4ba3cc; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+/* Search Section Styles */
+#search-section {
+    padding: 40px 20px; /* Padding inside the section */
+    max-width: 800px; /* Limiting the width for readability */
+    margin: 20px auto; /* Centering the section */
+    text-align: center; /* Centering text */
+}
+
+#search-section h2 {
+    font-size: 2.5em; /* Larger font size for emphasis */
+    margin-bottom: 20px; /* Spacing below the heading */
+    color: #282c34; /* Dark text for contrast */
+}
+
+#search-section p {
+    font-size: 1.2em; /* Slightly larger font for readability */
+    color: #555; /* Grey text for a softer look */
+    margin-bottom: 30px; /* Spacing below the paragraph */
+}
+
+/* Search bar and button styling */
+#search-bar {
+    display: flex; /* Flexbox for easy alignment */
+    justify-content: center; /* Centering the search bar */
+    margin-bottom: 40px; /* Spacing below the search bar */
+}
+
+#search-input {
+    width: 60%; /* Making the input field wide */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px 0 0 5px; /* Rounded corners for a seamless look */
+    font-size: 1em; /* Standard font size */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus effects */
+}
+
+#search-input:focus {
+    border-color: #61dafb; /* Blue border on focus */
+    box-shadow: 0 0 8px rgba(97, 218, 251, 0.5); /* Blue glow on focus */
+    outline: none; /* Removing default outline */
+}
+
+#search-button {
+    background-color: #61dafb; /* Blue background to match the theme */
+    color: #fff; /* White text for contrast */
+    padding: 12px 20px; /* Padding around the button */
+    border: none; /* Removing default border */
+    border-radius: 0 5px 5px 0; /* Rounded corners for a seamless look */
+    font-size: 1.2em; /* Slightly larger text for emphasis */
+    cursor: pointer; /* Pointer cursor to indicate it's clickable */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+#search-button:hover {
+    background-color: #4ba3cc; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+/* Styling the search results list */
+#search-results {
+    margin-top: 40px; /* Spacing above the results */
+}
+
+#search-results ul {
+    list-style: none; /* Removing default bullet points */
+    padding: 0; /* No padding needed */
+}
+
+#search-results li {
+    background-color: #fff; /* White background for contrast */
+    border: 1px solid #ccc; /* Light grey border for separation */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    padding: 20px; /* Padding inside the items */
+    margin-bottom: 20px; /* Spacing below each item */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adding a shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+#search-results li:hover {
+    transform: translateY(-5px); /* Slight upward movement on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Thank You Section Styles */
+#thank-you {
+    background-color: #ffffff; /* White background for contrast */
+    padding: 40px; /* Padding inside the section */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adding a shadow for depth */
+    max-width: 800px; /* Limiting the width for readability */
+    margin: 20px auto; /* Centering the section */
+    text-align: center; /* Centering text */
+}
+
+#thank-you h2 {
+    font-size: 2.5em; /* Larger font size for emphasis */
+    margin-bottom: 20px; /* Spacing below the heading */
+    color: #282c34; /* Dark text for contrast */
+}
+
+#thank-you p {
+    font-size: 1.2em; /* Slightly larger font for readability */
+    color: #555; /* Grey text for a softer look */
+    margin-bottom: 30px; /* Spacing below the paragraph */
+}
+
+/* Styling the list of thank you options */
+#thank-you ul {
+    list-style: none; /* Removing default bullet points */
+    padding: 0; /* No padding needed */
+}
+
+#thank-you ul li {
+    margin: 10px 0; /* Spacing between each item */
+}
+
+/* Styling the links within the thank you section */
+#thank-you ul li a {
+    color: #61dafb; /* Blue text for links */
+    text-decoration: none; /* Removing underline from links */
+    font-weight: bold; /* Bold text for emphasis */
+    transition: color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+#thank-you ul li a:hover {
+    color: #282c34; /* Darker text on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #282c34; /* Dark background for footer */
+    color: #61dafb; /* Blue text to match the theme */
+    text-align: center; /* Centering text */
+    padding: 15px 0; /* Padding around the footer content */
+    position: fixed; /* Sticking the footer to the bottom */
+    width: 100%; /* Footer spans the full width */
+    bottom: 0; /* Positioned at the bottom of the viewport */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #fundraiser-list {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack nav items vertically on smaller screens */
+        gap: 10px; /* Reduce spacing between items */
+    }
+
+    #contact-us {
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
+
+    #search-bar {
+        flex-direction: column; /* Stack search input and button vertically on smaller screens */
+    }
+
+    #search-input {
+        width: 100%; /* Make the search input full width on smaller screens */
+        border-radius: 5px 5px 0 0; /* Adjust border radius */
+    }
+
+    #search-button {
+        border-radius: 0 0 5px 5px; /* Adjust border radius */
+    }
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

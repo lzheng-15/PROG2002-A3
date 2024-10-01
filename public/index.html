@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameForge Crowdfunding - Home</title>
+
+    <!-- Linking external CSS for styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header section with background image and welcome text -->
+    <header>
+        <div class="header-content">
+            <h1>Welcome to GameForge Crowdfunding</h1>
+            <p>Supporting creative developers in bringing their games to life.</p>
+        </div>
+    </header>
+
+    <!-- Navigation bar -->
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="search.html">Search Projects</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <!-- Main content section with active game fundraisers -->
+    <div class="container">
+        <h2>Active Game Fundraisers</h2>
+        <div class="fundraiser-list" id="fundraiser-list">
+            <!-- Fundraiser items will be injected here via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch all active fundraisers from the API
+        function fetchFundraisers() {
+            // Fetch data from the API endpoint for active fundraisers
+            fetch('http://localhost:3000/api/fundraisers')  
+                .then(response => {
+                    // Check if the response is okay (status code 200)
+                    if (!response.ok) {
+                        console.error('API call failed with status:', response.status);
+                        throw new Error('Failed to fetch fundraisers');
+                    }
+                    // Parse the JSON response from the server
+                    return response.json();
+                })
+                .then(data => {
+                    // Get the container element where fundraiser items will be displayed
+                    const fundraiserList = document.getElementById('fundraiser-list');
+                    
+                    // If no fundraisers are available, display a message to the user
+                    if (!data || data.length === 0) {
+                        fundraiserList.innerHTML = "<p>No fundraisers available at the moment.</p>";
+                        return;
+                    }
+
+                    // Loop through the list of fundraisers and create HTML elements for each
+                    data.forEach(fundraiser => {
+                        // Create a div element for each fundraiser
+                        const fundraiserItem = document.createElement('div');
+                        fundraiserItem.classList.add('fundraiser-item'); // Add a class for styling
+
+                        // Create the HTML content for each fundraiser, including an image and text details
+                        fundraiserItem.innerHTML = `
+                        <img src="${fundraiser.image}" alt="${fundraiser.CAPTION} image" class="fundraiser-image">  <!-- Display fundraiser image -->
+                        <h3>${fundraiser.CAPTION}</h3>  <!-- Display fundraiser caption as a title -->
+                        <p><strong>Organizer:</strong> ${fundraiser.ORGANIZER}</p>  <!-- Display organizer's name -->
+                        <p><strong>Target Funding:</strong> $${fundraiser.TARGET_FUNDING.toLocaleString()}</p>  <!-- Display target funding amount -->
+                        <p><strong>Current Funding:</strong> $${fundraiser.CURRENT_FUNDING.toLocaleString()}</p>  <!-- Display current funding raised -->
+                        <p><strong>City:</strong> ${fundraiser.CITY}</p>  <!-- Display the city of the fundraiser -->
+                        <p><strong>Status:</strong> ${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</p>  <!-- Display status (active/inactive) -->
+                        <p><strong>Game Category:</strong> ${fundraiser.CATEGORY_NAME}</p>  <!-- Display game category -->
+                        <a href="fundraiser_details.html?id=${fundraiser.FUNDRAISER_ID}" class="btn">Learn More</a>  <!-- Add a 'Learn More' button linking to the detailed page for the fundraiser -->
+                        `;
+                        
+                        // Append the fundraiser element to the list
+                        fundraiserList.appendChild(fundraiserItem);
+                    });
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the fetch process
+                    console.error('Error fetching fundraisers:', error);
+                    document.getElementById('fundraiser-list').innerHTML = "<p>Error loading fundraisers. Please try again later.</p>";
+                });
+        }
+
+        // Call the function to fetch and display fundraisers when the page loads
+        fetchFundraisers();
+    </script>
+
+    <!-- Footer section -->
+    <footer>
+    <p>&copy; 2024 GameForge Crowdfunding. All rights reserved.</p>
+    </footer>
+
+  </body>
+
+</html>

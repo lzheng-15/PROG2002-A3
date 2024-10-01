@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Listings - GameForge</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <header>
+        <img src="images/GameForge_Text_Logo.png" alt="GameForge Logo" id="site-logo">
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="search.html">Search Fundraisers</a></li>
+                <li><a href="projects.html">View Projects</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Introductory section with a welcome message -->
+        <section id="intro">
+            <h2>Empowering the Next Generation of Game Developers</h2>
+            <p>Welcome to GameForge, where creativity meets opportunity. Discover and support the next big game projects.</p>
+        </section>
+
+        <h2>Active Game Projects</h2>
+        <!-- Section to display project data dynamically -->
+        <section id="project-list"></section> <!-- Empty section to load projects -->
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GameForge. All rights reserved.</p> <!-- Footer -->
+    </footer>
+
+    <script>
+        // Fetch projects from the API and dynamically display them
+        fetch('/api/projects') // Call the Node.js API to get project data
+        .then(response => response.json()) // Parse the response as JSON
+        .then(projects => {
+            const projectList = document.getElementById('project-list'); // Get the project list element
+            
+            // Check if there are projects in the response
+            if (projects.length > 0) {
+                // Loop through each project and create a div to display the details
+                projects.forEach(project => {
+                    const projectDiv = document.createElement('div'); // Create a div for each project
+                    projectDiv.classList.add('project'); // Add a class for styling
+
+                    // Set the inner HTML for each project (Title, Description, etc.)
+                    projectDiv.innerHTML = `
+                        <h3>${project.TITLE}</h3> <!-- Project title -->
+                        <p>${project.DESCRIPTION}</p> <!-- Project description -->
+                        <p>Target Funding: $${project.TARGET_FUNDING}</p> <!-- Target funding -->
+                        <p>Current Funding: $${project.CURRENT_FUNDING}</p> <!-- Current funding -->
+                        <p>Start Date: ${new Date(project.START_DATE).toLocaleDateString()}</p> <!-- Start date -->
+                        <p>End Date: ${new Date(project.END_DATE).toLocaleDateString()}</p> <!-- End date -->
+                        <hr>
+                    `;
+
+                    // Append each project div to the project list section
+                    projectList.appendChild(projectDiv);
+                });
+            } else {
+                // If no projects are found, display a message
+                projectList.innerHTML = '<p>No projects found.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching projects:', error); // Log any error in the fetch process
+            document.getElementById('project-list').innerHTML = '<p>Error loading projects.</p>'; // Show an error message
+        });
+    </script>
+</body>
+</html>
