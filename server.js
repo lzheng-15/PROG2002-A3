@@ -193,6 +193,25 @@ app.post('/api/fundraiser', (req, res) => {
   });
 });
 
-// 4. PUT
+// 4. PUT to update an existing fundraiser
+app.put('/api/fundraiser/:id', (req, res) => {
+  const fundraiserId = req.params.id;
+  const { organizer, caption, target_funding, city, category_id, image } = req.body;
+  const query = `
+    UPDATE FUNDRAISER 
+    SET ORGANIZER = ?, CAPTION = ?, TARGET_FUNDING = ?, CITY = ?, CATEGORY_ID = ?, image = ?
+    WHERE FUNDRAISER_ID = ?;
+  `;
+  
+  db.query(query, [organizer, caption, target_funding, city, category_id, image, fundraiserId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Fundraiser not found' });
+    }
+    res.json({ message: 'Fundraiser updated successfully' });
+  });
+});
 
 // 5. DELETE
