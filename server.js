@@ -214,4 +214,34 @@ app.put('/api/fundraiser/:id', (req, res) => {
   });
 });
 
-// 5. DELETE
+// 5. DELETE a fundraiser (only if there are no donations)
+app.delete('/api/fundraiser/:id', (req, res) => {
+  const fundraiserId = req.params.id;
+
+  // Check if fundraiser has donations
+  const checkQuery = `
+    SELECT COUNT(*) AS donationCount FROM DONATION WHERE FUNDRAISER_ID = ?;
+  `;
+  
+  db.query(checkQuery, [fundraiserId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    
+    if (result[0].donationCount > 0) {
+      return res.status(400).json({ error: 'Cannot delete fundraiser with donations' });
+    }
+    
+    // Proceed with deletion if no donations
+    const deleteQuery = `
+      DELETE FROM FUNDRAISER WHERE FUNDRAISER_ID = ?;
+    `;
+    
+    db.query(deleteQuery, [fundraiserId], (deleteErr) => {
+      if (deleteErr) {
+        return res.status(500).json({ error: deleteErr.message });
+      }
+      res.json({ message: 'Fundraiser deleted successfully' });
+    });
+  });
+});
