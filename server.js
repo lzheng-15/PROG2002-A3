@@ -136,3 +136,35 @@ app.get('/api/fundraiser/:id', (req, res) => {
   });
 });
 
+// Improved APIs created for Part 2 in Assessment 3
+
+// 1. GET fundraiser details (with donations)
+app.get('/api/fundraiser/:id/donations', (req, res) => {
+  const fundraiserId = req.params.id;
+  const query = `
+    SELECT FUNDRAISER.FUNDRAISER_ID, ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, ACTIVE, CATEGORY.NAME AS CATEGORY_NAME, FUNDRAISER.image,
+           DONATION.DATE, DONATION.AMOUNT, DONATION.GIVER
+    FROM FUNDRAISER
+    JOIN CATEGORY ON FUNDRAISER.CATEGORY_ID = CATEGORY.CATEGORY_ID
+    LEFT JOIN DONATION ON FUNDRAISER.FUNDRAISER_ID = DONATION.FUNDRAISER_ID
+    WHERE FUNDRAISER.FUNDRAISER_ID = ?;
+  `;
+  
+  db.query(query, [fundraiserId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Fundraiser not found' });
+    }
+    res.json(results);
+  });
+});
+
+// 2. POST
+
+// 3. POST
+
+// 4. PUT
+
+// 5. DELETE
