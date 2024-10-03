@@ -161,7 +161,22 @@ app.get('/api/fundraiser/:id/donations', (req, res) => {
   });
 });
 
-// 2. POST
+// 2. POST a new donation to a fundraiser
+app.post('/api/fundraiser/:id/donation', (req, res) => {
+  const fundraiserId = req.params.id;
+  const { date, amount, giver } = req.body;
+  const query = `
+    INSERT INTO DONATION (DATE, AMOUNT, GIVER, FUNDRAISER_ID) 
+    VALUES (?, ?, ?, ?);
+  `;
+  
+  db.query(query, [date, amount, giver, fundraiserId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: 'Donation added successfully', donation_id: result.insertId });
+  });
+});
 
 // 3. POST
 
