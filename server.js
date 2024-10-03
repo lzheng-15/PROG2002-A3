@@ -2,7 +2,6 @@ require('dotenv').config();  // Load environment variables
 const express = require('express');  // Import express for API routes
 const db = require('./db_crowdfunding_connect');  // Import the MySQL connection
 const app = express();  // Initialize the express app
-const path = require('path');
 const cors = require('cors');
 app.use(cors());
 
@@ -17,7 +16,7 @@ app.listen(port, () => {
 });
 
 // serves static files from public folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Default route to handle base URL ("/")
 app.get('/', (req, res) => {
@@ -178,7 +177,21 @@ app.post('/api/fundraiser/:id/donation', (req, res) => {
   });
 });
 
-// 3. POST
+// 3. POST to create a new fundraiser
+app.post('/api/fundraiser', (req, res) => {
+  const { organizer, caption, target_funding, city, category_id, image } = req.body;
+  const query = `
+    INSERT INTO FUNDRAISER (ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, ACTIVE, CATEGORY_ID, image)
+    VALUES (?, ?, ?, 0, ?, true, ?, ?);
+  `;
+  
+  db.query(query, [organizer, caption, target_funding, city, category_id, image], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ message: 'Fundraiser created successfully', fundraiser_id: result.insertId });
+  });
+});
 
 // 4. PUT
 
