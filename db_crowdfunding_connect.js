@@ -1,11 +1,11 @@
 // db_crowdfunding_connect.js
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
     host: 'localhost',        
     user: 'root',             
-    password: 'Stumar2024!',   
-    database: 'smarle14_crowdfunding_db'
+    password: 'Lzheng15',   
+    database: 'crowdfunding_db'
 });
 
 // Connect to the database

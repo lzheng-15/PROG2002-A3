@@ -2,6 +2,7 @@ require('dotenv').config();  // Load environment variables
 const express = require('express');  // Import express for API routes
 const db = require('./db_crowdfunding_connect');  // Import the MySQL connection
 const app = express();  // Initialize the express app
+const path = require('path');
 const cors = require('cors');
 app.use(cors());
 
@@ -10,9 +11,22 @@ app.use(express.json());  // Middleware to parse incoming JSON requests
 // Define the port from environment variables or use 3000 as default
 const port = process.env.PORT || 3000;
 
+// Start the server on the defined port
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+// serves static files from public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Default route to handle base URL ("/")
 app.get('/', (req, res) => {
   res.send('Welcome to the Crowdfunding API');  // Basic welcome message for root URL
+});
+
+// Catch-all route for undefined paths
+app.use((req, res) => {
+  res.status(404).send('404: Page not found');
 });
 
 // 1. GET all active fundraisers with their categories and images
@@ -122,12 +136,3 @@ app.get('/api/fundraiser/:id', (req, res) => {
   });
 });
 
-// Catch-all route for undefined paths
-app.use((req, res) => {
-  res.status(404).send('404: Page not found');
-});
-
-// Start the server on the defined port
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
