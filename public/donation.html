@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate to Fundraiser - GameForge Crowdfunding</title>
+
+    <!-- Linking external CSS for styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header section -->
+    <header>
+        <div class="header-content">
+            <h1>Donate to Support</h1>
+            <p>Contribute to your favorite project and make a difference!</p>
+        </div>
+    </header>
+
+    <!-- Navigation bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search.html">Search Projects</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <!-- Main container for page content -->
+    <div class="container">
+        <!-- Donation Form Section (floating box) -->
+        <section class="donation-section">
+            <h2>Make a Donation</h2>
+            <form id="donation-form">
+                <div class="form-group">
+                    <label for="donor-name">Your Name:</label>
+                    <input type="text" id="donor-name" name="donor-name" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="donor-email">Your Email:</label>
+                    <input type="email" id="donor-email" name="donor-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="donation-amount">Donation Amount (min 5 AUD):</label>
+                    <input type="number" id="donation-amount" name="donation-amount" min="5" placeholder="Enter amount" required>
+                </div>
+
+                <button type="submit" class="btn">Submit My Donation</button>
+            </form>
+        </section>
+
+        <!-- Fundraiser Details Section -->
+        <section class="fundraiser-details">
+            <!-- The fundraiser image, description, and rewards will be injected via JavaScript -->
+            <div id="fundraiser-info">
+                <!-- Content to be dynamically filled -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer section -->
+    <footer>
+        <p>&copy; 2024 GameForge Crowdfunding. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for dynamic content -->
+    <script>
+        // Function to get query parameter from URL (added by Stuart on 02/10/2024)
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to fetch fundraiser details and display them (added by Stuart on 02/10/2024)
+        function fetchFundraiserDetails() {
+            const fundraiserId = getQueryParam('id'); // Get fundraiser ID from URL
+            
+            if (!fundraiserId) {
+                document.getElementById('fundraiser-info').innerHTML = '<p>No fundraiser found. Please return to the <a href="search.html">Search Page</a>.</p>';
+                return;
+            }
+
+            // Fetch fundraiser details from API (replace with your actual API endpoint)
+            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch fundraiser details');
+                    }
+                    return response.json();
+                })
+                .then(fundraiser => {
+                    const fundraiserInfo = document.getElementById('fundraiser-info');
+
+                    // Defensive checks for undefined properties
+                    const title = fundraiser.CAPTION || 'Untitled Fundraiser';
+                    const description = fundraiser.DESCRIPTION || 'No description available.';
+                    const imageUrl = fundraiser.image || 'img/default-image.jpg';
+                    const rewards = fundraiser.rewards || [];
+
+                    // Display fundraiser details
+                    fundraiserInfo.innerHTML = `
+                        <h2>${title}</h2>
+                        <img src="${imageUrl}" alt="${title} image" class="fundraiser-image">
+                        <p><strong>Description:</strong> ${description}</p>
+                        <h3>Rewards:</h3>
+                        <ul id="rewards-list">
+                            ${rewards.length > 0 ? rewards.map(reward => `<li><strong>Pledge Amount:</strong> $${reward.PLEDGE_AMOUNT.toLocaleString()} - ${reward.REWARD_DESCRIPTION}</li>`).join('') : '<li>No rewards available for this fundraiser.</li>'}
+                        </ul>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching fundraiser details:', error);
+                    document.getElementById('fundraiser-info').innerHTML = "<p>Error loading fundraiser details. Please try again later.</p>";
+                });
+        }
+
+        // Handle form submission for donation
+        document.getElementById('donation-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const donationAmount = document.getElementById('donation-amount').value;
+
+            // Validate minimum donation amount
+            if (donationAmount < 5) {
+                alert('The minimum donation amount is 5 AUD.');
+            } else {
+                // Perform donation API call (replace with actual API endpoint)
+                alert('Thank you for your donation!');
+                // After successful donation, you may redirect or update the page content as needed
+            }
+        });
+
+        // Call to fetch fundraiser details on page load
+        fetchFundraiserDetails();
+    </script>
+</body>
+</html>

@@ -469,3 +469,55 @@ footer p {
 .btn:hover {
     background-color: #ff6f00;
 }
+
+/* --- Updated Donation Page Layout - Added by Stuart on 02/10/2024 --- */
+
+/* Floating donation form styling */
+.donation-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Adds shadow for donation form */
+    max-width: 350px; /* Set maximum width */
+    margin: 20px; /* Margin around the form */
+    float: right; /* Float form to the right */
+}
+
+/* Fundraiser details styling */
+.fundraiser-details {
+    margin-right: 400px; /* Margin to ensure space on the left of donation form */
+    padding: 20px;
+    overflow: hidden; /* Clear float */
+}
+
+/* Form inputs within donation section */
+.donation-section input[type="text"],
+.donation-section input[type="email"],
+.donation-section input[type="number"] {
+    width: 100%; /* Full width input */
+    padding: 10px;
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Submit button styling for donation section */
+.donation-section .btn {
+    background-color: #ff8a00; /* Orange background */
+    color: white; /* White text */
+    padding: 12px 25px;
+    border-radius: 25px; /* Rounded corners */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: bold;
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor */
+    width: 100%; /* Full width button */
+    margin-top: 15px;
+}
+
+/* Hover effect for submit button */
+.donation-section .btn:hover {
+    background-color: #ff6f00; /* Darker orange on hover */
+}
+
