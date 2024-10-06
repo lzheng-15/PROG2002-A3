@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Manage Fundraisers</title>
+    <link rel="stylesheet" href="adminstyles.css">
+    <style>
+        /* Hide sections with hidden class */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>Admin Panel</h1>
+            <p>Fundraiser Management</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="admin.html" class="active">Home</a>
+        <a href="index.html">Client View</a>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- List of Fundraisers -->
+        <section id="fundraiser-list-section">
+            <h2>All Fundraisers</h2>
+            <table id="fundraisers-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Caption</th>
+                        <th>Organizer</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Fundraiser rows will be dynamically injected here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Create Fundraiser Section -->
+        <section id="create-fundraiser-section">
+            <h2>Create a New Fundraiser</h2>
+            <form id="create-fundraiser-form">
+                <div class="form-group">
+                    <label for="caption">Caption:</label>
+                    <input type="text" id="caption" name="caption" required>
+                </div>
+                <div class="form-group">
+                    <label for="organizer">Organizer:</label>
+                    <input type="text" id="organizer" name="organizer" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save Fundraiser</button>
+            </form>
+        </section>
+
+        <!-- Update Fundraiser Section (hidden initially) -->
+        <section id="update-fundraiser-section" class="hidden">
+            <h2>Update Fundraiser</h2>
+            <form id="update-fundraiser-form">
+                <div class="form-group">
+                    <label for="update-id">Fundraiser ID:</label>
+                    <input type="text" id="update-id" name="update-id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="update-caption">Caption:</label>
+                    <input type="text" id="update-caption" name="update-caption" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-organizer">Organizer:</label>
+                    <input type="text" id="update-organizer" name="update-organizer" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-status">Status:</label>
+                    <select id="update-status" name="update-status" required>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Update Fundraiser</button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- JavaScript to Fetch, Create, Update, and Delete Fundraisers -->
+    <script>
+        // Function to fetch all fundraisers 
+        function fetchFundraisers() {
+            fetch('http://localhost:3000/api/fundraisers') // Replace with actual API endpoint after linking to our Cpannels
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#fundraisers-table tbody');
+                    tableBody.innerHTML = '';
+
+                    // Populate the table with fundraiser rows
+                    data.forEach(fundraiser => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${fundraiser.FUNDRAISER_ID}</td>
+                            <td>${fundraiser.CAPTION}</td>
+                            <td>${fundraiser.ORGANIZER}</td>
+                            <td>${fundraiser.ACTIVE ? 'Active' : 'Inactive'}</td>
+                            <td>
+                                <button class="edit-btn" onclick="populateUpdateForm(${fundraiser.FUNDRAISER_ID})">Edit</button>
+                                <button class="delete-btn" onclick="deleteFundraiser(${fundraiser.FUNDRAISER_ID})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching fundraisers:', error));
+        }
+
+        // Function to create a new fundraiser 
+        document.getElementById('create-fundraiser-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const caption = document.getElementById('caption').value;
+            const organizer = document.getElementById('organizer').value;
+            const status = document.getElementById('status').value;
+
+            // Call the POST API to create a new fundraiser  Replace with actual API endpoint after linking to our Cpannels
+            fetch('http://localhost:3000/api/fundraisers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ caption, organizer, status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Fundraiser created successfully!');
+                fetchFundraisers();
+            })
+            .catch(error => console.error('Error creating fundraiser:', error));
+        });
+
+        // Function to delete a fundraiser  Replace with actual API endpoint after linking to our Cpannels
+        function deleteFundraiser(fundraiserId) {
+            if (confirm('Are you sure you want to delete this fundraiser?')) {
+                fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    alert('Fundraiser deleted successfully!');
+                    fetchFundraisers();
+                })
+                .catch(error => console.error('Error deleting fundraiser:', error));
+            }
+        }
+
+        // Function to populate the update form and display it  Replace with actual API endpoint after linking to our Cpannels
+        function populateUpdateForm(fundraiserId) {
+            // Fetch the specific fundraiser details
+            fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`)
+                .then(response => response.json())
+                .then(fundraiser => {
+                    // Prefill form fields with fundraiser data
+                    document.getElementById('update-id').value = fundraiser.FUNDRAISER_ID;
+                    document.getElementById('update-caption').value = fundraiser.CAPTION;
+                    document.getElementById('update-organizer').value = fundraiser.ORGANIZER;
+                    document.getElementById('update-status').value = fundraiser.ACTIVE ? '1' : '0';
+
+                    // Show the update section when editing
+                    document.getElementById('update-fundraiser-section').classList.remove('hidden');
+                })
+                .catch(error => console.error('Error fetching fundraiser details:', error));
+        }
+
+        // Function to update an existing fundraiser 
+        document.getElementById('update-fundraiser-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fundraiserId = document.getElementById('update-id').value;
+            const caption = document.getElementById('update-caption').value;
+            const organizer = document.getElementById('update-organizer').value;
+            const status = document.getElementById('update-status').value;
+
+            // Call the PUT API to update the fundraiser  Replace with actual API endpoint after linking to our Cpannels
+            fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ caption, organizer, status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Fundraiser updated successfully!');
+                fetchFundraisers();
+
+                // Hide the update section after submission
+                document.getElementById('update-fundraiser-section').classList.add('hidden');
+            })
+            .catch(error => console.error('Error updating fundraiser:', error));
+        });
+
+        // Fetch all fundraisers on page load and ensure update form is hidden
+        window.onload = () => {
+            fetchFundraisers();
+            document.getElementById('update-fundraiser-section').classList.add('hidden');
+        };
+    </script>
+
+</body>
+</html>

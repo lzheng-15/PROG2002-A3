@@ -23,11 +23,6 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Crowdfunding API');  // Basic welcome message for root URL
 });
 
-// Catch-all route for undefined paths
-app.use((req, res) => {
-  res.status(404).send('404: Page not found');
-});
-
 // 1. GET all active fundraisers with their categories and images
 app.get('/api/fundraisers', (req, res) => {
   const query = `
@@ -244,4 +239,9 @@ app.delete('/api/fundraiser/:id', (req, res) => {
       res.json({ message: 'Fundraiser deleted successfully' });
     });
   });
+});
+
+// Catch-all route for undefined paths
+app.use((req, res) => {
+  res.status(404).send('404: Page not found');
 });

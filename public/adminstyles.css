@@ -1,0 +1,207 @@
+/* Reset base styles for consistent layout across browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General body styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5; /* Light grey background */
+    color: #333; /* Default text color */
+    padding-bottom: 50px; /* Space at the bottom */
+}
+
+/* Header styling */
+header {
+    background-color: #34495e; /* Dark blue header */
+    color: #ecf0f1; /* Light text color */
+    padding: 30px 20px; /* Padding for header */
+    text-align: center; /* Center-align text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #2c3e50; /* Darker blue nav */
+    padding: 15px; /* Padding around links */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    display: flex;
+    justify-content: center; /* Center-align navigation */
+    gap: 20px; /* Space between links */
+}
+
+/* Navigation links */
+nav a {
+    color: #ecf0f1; /* Light text color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+    padding: 10px 15px; /* Padding for links */
+    border-radius: 5px; /* Rounded link area */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+/* Active and hover link styles */
+nav a.active,
+nav a:hover {
+    background-color: #ff8a00; /* Orange background */
+    color: #ffffff; /* White text on active/hover */
+}
+
+/* Main container for content */
+.container {
+    max-width: 1000px; /* Limit width */
+    margin: 40px auto; /* Center container */
+    padding: 25px 20px; /* Space within container */
+    background-color: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Light shadow */
+    overflow: hidden; /* Handle float issues */
+}
+
+/* Table styling */
+table {
+    width: 100%; /* Full-width table */
+    border-collapse: collapse; /* Remove cell spacing */
+    margin-bottom: 20px; /* Space below table */
+}
+
+table th,
+table td {
+    padding: 12px 15px; /* Space within cells */
+    border-bottom: 1px solid #ddd; /* Subtle row border */
+}
+
+table th {
+    background-color: #34495e; /* Dark header */
+    color: #ffffff; /* White text */
+    font-weight: 600; /* Bold header text */
+}
+
+/* Table row hover effect */
+table tr:hover {
+    background-color: #f7f9fb; /* Light grey on hover */
+}
+
+/* Form styling for add/update */
+form {
+    display: grid; /* Grid layout */
+    gap: 15px; /* Space between fields */
+    margin-bottom: 30px; /* Space below form */
+    padding: 15px 20px; /* Form padding */
+    background-color: #f9fafb; /* Light form background */
+    border-radius: 8px; /* Smooth corners */
+}
+
+/* Form inputs, textarea, and selects */
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    width: 100%; /* Full width */
+    padding: 10px 15px; /* Space inside input */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded input */
+    margin-bottom: 15px; /* Space below input */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    font-family: 'Poppins', sans-serif; /* Consistent font */
+    appearance: none; /* Remove default dropdown arrow */
+    background-color: #ffffff; /* White background */
+}
+
+/* Improved select dropdown arrow */
+form select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23999999" class="bi bi-chevron-down"><path fill-rule="evenodd" d="M3.646 5.646a.5.5 0 0 1 .708 0L8 9.293l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708z"/></svg>');
+    background-repeat: no-repeat; /* Ensure the arrow does not repeat */
+    background-position: right 10px center; /* Position the arrow */
+    padding-right: 40px; /* Space for arrow */
+    cursor: pointer; /* Indicate dropdown interaction */
+}
+
+/* Focus effect on form elements */
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #ff8a00; /* Orange border on focus */
+    outline: none; /* Remove outline */
+    box-shadow: 0 0 8px rgba(255, 138, 0, 0.2); /* Glow on focus */
+}
+
+/* Labels */
+label {
+    font-weight: bold; /* Bold text */
+    margin-bottom: 5px; /* Space below label */
+    color: #34495e; /* Dark blue text */
+}
+
+/* Buttons */
+button {
+    background-color: #ff8a00; /* Orange button */
+    color: #ffffff; /* White text */
+    padding: 12px 20px; /* Button padding */
+    border: none; /* Remove border */
+    border-radius: 25px; /* Rounded corners */
+    font-size: 1rem; /* Button font */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Button shadow */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+button:hover {
+    background-color: #ff6f00; /* Darker orange on hover */
+}
+
+/* Action links */
+.action-link {
+    background-color: #ff8a00; /* Orange action link */
+    color: #ffffff; /* White text */
+    padding: 8px 12px; /* Padding for links */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Bold text */
+    margin-right: 10px; /* Space between links */
+    display: inline-block; /* Inline block for button style */
+    transition: background-color 0.3s ease; /* Smooth hover */
+}
+
+.action-link:hover {
+    background-color: #ff6f00; /* Darker orange */
+}
+
+/* Section headings */
+.section h2 {
+    font-size: 1.8rem; /* Heading font size */
+    color: #34495e; /* Dark blue heading */
+    margin-bottom: 20px; /* Space below heading */
+    text-align: left; /* Align text */
+    font-weight: 700; /* Bold heading */
+}
+
+/* Section with table */
+.table-section {
+    margin-bottom: 30px; /* Space below section */
+    overflow-x: auto; /* Horizontal scrolling if needed */
+}
+
+/* Enhanced responsive adjustments */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 15px; /* Reduce padding on smaller screens */
+        margin: 20px auto; /* Adjust margin */
+    }
+
+    table th, table td {
+        padding: 10px; /* Reduce cell padding */
+    }
+
+    form {
+        gap: 10px; /* Reduce gap between form elements */
+        padding: 15px; /* Adjust form padding */
+    }
+
+    button {
+        padding: 10px 15px; /* Adjust button padding */
+    }
+}

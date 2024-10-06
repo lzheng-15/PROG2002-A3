@@ -17,8 +17,8 @@ This project is part of Assessment 3 for the PROG2002 unit. It involves developi
 - Fully functional APIs for managing fundraising data
 
 ## Group Members:
-- **Stuart Marley** (Frontend Development: Part 3 & 4)
-- **Lu Zheng** (Backend Development: Part 1 & 2)
+- **Stuart Marley** (Part 3 & 4)
+- **Lu Zheng** (Part 1 & 2)
 
 ## Deployment:
 This website will be deployed on the SCU cPanel server to demonstrate full functionality.
