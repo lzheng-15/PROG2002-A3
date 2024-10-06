@@ -41,6 +41,13 @@
                 <!-- Rewards will be injected here via JavaScript -->
             </ul>
         </section>
+
+        <section id="donations-section" class="donations-container">
+            <h3>Donations:</h3>
+            <ul id="donations-list">
+                <!-- Donations will be injected here via JavaScript -->
+            </ul>
+        </section>
     </div>
 
     <!-- JavaScript for dynamic content -->
@@ -51,9 +58,10 @@
             return urlParams.get(param);
         }
 
-        // Function to display a "Donate" button dialog
-        function showDonateDialog() {
-            alert('This feature is under construction');
+        // Function to redirect to the donation page
+        function redirectToDonationPage() {
+            const fundraiserId = getQueryParam('id');
+            window.location.href = `donation.html?id=${fundraiserId}`;
         }
 
         // Function to fetch and display fundraiser details
@@ -65,8 +73,8 @@
                 return;
             }
 
-            // Fetch fundraiser details including rewards
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`)
+            // Fetch fundraiser details including donations using API created for Part 2
+            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donations`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch fundraiser details');
@@ -77,20 +85,20 @@
                     const fundraiserDetails = document.getElementById('fundraiser-details');
 
                     // Defensive checks for undefined properties
-                    const targetFunding = fundraiser.TARGET_FUNDING ? `$${fundraiser.TARGET_FUNDING.toLocaleString()}` : 'N/A';
-                    const currentFunding = fundraiser.CURRENT_FUNDING ? `$${fundraiser.CURRENT_FUNDING.toLocaleString()}` : 'N/A';
-                    const city = fundraiser.CITY || 'N/A';
-                    const status = fundraiser.ACTIVE ? 'Active' : 'Inactive';
-                    const categoryName = fundraiser.CATEGORY_NAME || 'N/A';
-                    const description = fundraiser.DESCRIPTION || 'No description available.';
-                    const imageUrl = fundraiser.image || 'img/default-image.jpg';
+                    const targetFunding = fundraiser[0].TARGET_FUNDING ? `$${fundraiser[0].TARGET_FUNDING.toLocaleString()}` : 'N/A';
+                    const currentFunding = fundraiser[0].CURRENT_FUNDING ? `$${fundraiser[0].CURRENT_FUNDING.toLocaleString()}` : 'N/A';
+                    const city = fundraiser[0].CITY || 'N/A';
+                    const status = fundraiser[0].ACTIVE ? 'Active' : 'Inactive';
+                    const categoryName = fundraiser[0].CATEGORY_NAME || 'N/A';
+                    const description = fundraiser[0].DESCRIPTION || 'No description available.';
+                    const imageUrl = fundraiser[0].image || 'img/default-image.jpg';
 
                     // Display fundraiser details
                     fundraiserDetails.innerHTML = `
-                        <h2>${fundraiser.CAPTION || 'Untitled Fundraiser'}</h2>
-                        <img src="${imageUrl}" alt="${fundraiser.CAPTION} image" class="fundraiser-image">
+                        <h2>${fundraiser[0].CAPTION || 'Untitled Fundraiser'}</h2>
+                        <img src="${imageUrl}" alt="${fundraiser[0].CAPTION} image" class="fundraiser-image">
                         <div class="fundraiser-info">
-                            <p><strong>Organizer:</strong> ${fundraiser.ORGANIZER || 'Unknown'}</p>
+                            <p><strong>Organizer:</strong> ${fundraiser[0].ORGANIZER || 'Unknown'}</p>
                             <p><strong>Target Funding:</strong> ${targetFunding}</p>
                             <p><strong>Current Funding:</strong> ${currentFunding}</p>
                             <p><strong>City:</strong> ${city}</p>
@@ -98,7 +106,7 @@
                             <p><strong>Game Category:</strong> ${categoryName}</p>
                             <p><strong>Description:</strong> ${description}</p>
                         </div>
-                        <button class="donate-btn" onclick="showDonateDialog()">Donate</button>
+                        <button class="donate-btn" onclick="redirectToDonationPage()">Donate</button>
                     `;
 
                     // Display rewards if available
@@ -113,6 +121,22 @@
                         });
                     } else {
                         rewardsList.innerHTML = '<li>No rewards available for this fundraiser.</li>';
+                    }
+
+                    // Display donations if available
+                    const donationsList = document.getElementById('donations-list');
+                    if (fundraiser.length > 0) {
+                        fundraiser.forEach((donation, index) => {
+                            if (index > 0 && donation.AMOUNT) { // Skip the first record as it contains fundraiser details
+                                const donationItem = document.createElement('li');
+                                donationItem.innerHTML = `
+                                    <strong>Date:</strong> ${new Date(donation.DATE).toLocaleDateString()} - <strong>Amount:</strong> $${donation.AMOUNT.toLocaleString()} - <strong>Giver:</strong> ${donation.GIVER || 'Anonymous'}
+                                `;
+                                donationsList.appendChild(donationItem);
+                            }
+                        });
+                    } else {
+                        donationsList.innerHTML = '<li>No donations available for this fundraiser.</li>';
                     }
                 })
                 .catch(error => {

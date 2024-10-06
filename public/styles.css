@@ -453,6 +453,44 @@ footer p {
     border-bottom: none;
 }
 
+/* --- Updated Fundraiser Details Layout - Added by Lu on 06/10/2024 --- */
+
+/* Donations section styling */
+#donations-section {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    text-align: left;
+}
+
+/* Rewards heading */
+#donations-section h3 {
+    font-size: 2rem;
+    color: #34495e; /* Dark blue */
+    margin-bottom: 20px;
+}
+
+/* Rewards list items */
+#donations-list {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0;
+}
+
+#donations-list li {
+    font-size: 1.1rem;
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Last item without a bottom border */
+#donations-list li:last-child {
+    border-bottom: none;
+}
+
 /* General button style for all pages */
 .btn {
     display: inline-block;
