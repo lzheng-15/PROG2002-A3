@@ -58,7 +58,7 @@
             return urlParams.get(param);
         }
 
-        // Function to redirect to the donation page
+        // Function to redirect to the donation page (added by Lu on 06/10/2024)
         function redirectToDonationPage() {
             const fundraiserId = getQueryParam('id');
             window.location.href = `donation.html?id=${fundraiserId}`;
@@ -73,7 +73,7 @@
                 return;
             }
 
-            // Fetch fundraiser details including donations using API created for Part 2
+            // Fetch fundraiser details including donations using API created for Part 2 (updated by Lu on 06/10/2024)
             fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donations`)
                 .then(response => {
                     if (!response.ok) {
@@ -123,7 +123,7 @@
                         rewardsList.innerHTML = '<li>No rewards available for this fundraiser.</li>';
                     }
 
-                    // Display donations if available
+                    // Display donations if available (added by Lu on 06/10/2024)
                     const donationsList = document.getElementById('donations-list');
                     if (fundraiser.length > 0) {
                         fundraiser.forEach((donation, index) => {
