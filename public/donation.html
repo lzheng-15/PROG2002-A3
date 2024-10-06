@@ -85,8 +85,8 @@
                 return;
             }
 
-            // Fetch fundraiser details from API (replace with your actual API endpoint)
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`)
+            // Fetch fundraiser details from API (updated by Lu on 06/102/2024)
+            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donations`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch fundraiser details');
@@ -97,19 +97,23 @@
                     const fundraiserInfo = document.getElementById('fundraiser-info');
 
                     // Defensive checks for undefined properties
-                    const title = fundraiser.CAPTION || 'Untitled Fundraiser';
-                    const description = fundraiser.DESCRIPTION || 'No description available.';
-                    const imageUrl = fundraiser.image || 'img/default-image.jpg';
-                    const rewards = fundraiser.rewards || [];
+                    const title = fundraiser[0].CAPTION || 'Untitled Fundraiser'
+                    const description = fundraiser[0].DESCRIPTION || 'No description available.';
+                    const imageUrl = fundraiser[0].image || 'img/default-image.jpg';
+                    const donations = fundraiser || []; // Contains donations
 
-                    // Display fundraiser details
+                    // Display fundraiser details with donations
                     fundraiserInfo.innerHTML = `
                         <h2>${title}</h2>
                         <img src="${imageUrl}" alt="${title} image" class="fundraiser-image">
                         <p><strong>Description:</strong> ${description}</p>
-                        <h3>Rewards:</h3>
-                        <ul id="rewards-list">
-                            ${rewards.length > 0 ? rewards.map(reward => `<li><strong>Pledge Amount:</strong> $${reward.PLEDGE_AMOUNT.toLocaleString()} - ${reward.REWARD_DESCRIPTION}</li>`).join('') : '<li>No rewards available for this fundraiser.</li>'}
+                        <h3>Donations:</h3>
+                        <ul id="donations-list">
+                            ${donations.length > 0 ? donations.map(donation => `
+                                <li><strong>Date:</strong> ${new Date(donation.DATE).toLocaleDateString()} - 
+                                <strong>Amount:</strong> $${donation.AMOUNT.toLocaleString()} - 
+                                <strong>Giver:</strong> ${donation.GIVER || 'Anonymous'}</li>
+                            `).join('') : '<li>No donations available for this fundraiser.</li>'}
                         </ul>
                     `;
                 })
@@ -122,15 +126,47 @@
         // Handle form submission for donation
         document.getElementById('donation-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
-            const donationAmount = document.getElementById('donation-amount').value;
+
+            // Get the necessary values
+            const fundraiserId = getQueryParam('id'); // Get fundraiser ID from URL
+            const donorName = document.getElementById('donor-name').value; // Capture donor name
+            const donationAmount = document.getElementById('donation-amount').value; // Capture donation amount
+            const date = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
             // Validate minimum donation amount
             if (donationAmount < 5) {
                 alert('The minimum donation amount is 5 AUD.');
             } else {
-                // Perform donation API call (replace with actual API endpoint)
-                alert('Thank you for your donation!');
-                // After successful donation, you may redirect or update the page content as needed
+
+                // Perform POST to add donation (added by Lu on 06/10/2024)
+                const donationData = {
+                    giver: donorName,
+                    amount: donationAmount,
+                    date: date
+                };
+
+                fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donation`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(donationData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to submit donation');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // After successful donation, show a dialog box and redirect to the fundraiser page
+                    alert(`${donorName}, thank you for your donation!`);
+                    window.location.href = `fundraiser_details.html?id=${fundraiserId}`; // Redirect to the fundraiser page
+                })
+                .catch(error => {
+                    console.error('Error submitting donation:', error);
+                    alert('There was an error processing your donation. Please try again later.');
+                });
             }
         });
 
