@@ -25,7 +25,7 @@
 
     <!-- Navigation Bar -->
     <nav>
-        <a href="admin.html" class="active">Home</a>
+        <a href="admin.html" class="active">Admin Home</a>
         <a href="index.html">Client View</a>
     </nav>
 
@@ -64,11 +64,20 @@
                     <input type="text" id="organizer" name="organizer" required>
                 </div>
                 <div class="form-group">
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" required>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
+                    <label for="target_funding">Target Funding:</label>
+                    <input type="number" id="target_funding" name="target_funding" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="category_id">Category ID:</label>
+                    <input type="number" id="category_id" name="category_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image URL:</label>
+                    <input type="text" id="image" name="image" required>
                 </div>
                 <button type="submit" class="btn">Save Fundraiser</button>
             </form>
@@ -91,11 +100,20 @@
                     <input type="text" id="update-organizer" name="update-organizer" required>
                 </div>
                 <div class="form-group">
-                    <label for="update-status">Status:</label>
-                    <select id="update-status" name="update-status" required>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
+                    <label for="update-target_funding">Target Funding:</label>
+                    <input type="number" id="update-target_funding" name="update-target_funding" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-city">City:</label>
+                    <input type="text" id="update-city" name="update-city" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-category_id">Category ID:</label>
+                    <input type="number" id="update-category_id" name="update-category_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="update-image">Image URL:</label>
+                    <input type="text" id="update-image" name="update-image" required>
                 </div>
                 <button type="submit" class="btn">Update Fundraiser</button>
             </form>
@@ -135,20 +153,25 @@
         // Function to create a new fundraiser 
         document.getElementById('create-fundraiser-form').addEventListener('submit', function(event) {
             event.preventDefault();
+
+            // Collect the form data
             const caption = document.getElementById('caption').value;
             const organizer = document.getElementById('organizer').value;
-            const status = document.getElementById('status').value;
+            const target_funding = document.getElementById('target_funding').value;
+            const city = document.getElementById('city').value;
+            const category_id = document.getElementById('category_id').value;
+            const image = document.getElementById('image').value;
 
             // Call the POST API to create a new fundraiser  Replace with actual API endpoint after linking to our Cpannels
-            fetch('http://localhost:3000/api/fundraisers', {
+            fetch('http://localhost:3000/api/fundraiser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ caption, organizer, status })
+                body: JSON.stringify({ caption, organizer, target_funding, city, category_id, image})
             })
             .then(response => response.json())
             .then(data => {
                 alert('Fundraiser created successfully!');
-                fetchFundraisers();
+                fetchFundraisers(); // Refresh the fundraiser list
             })
             .catch(error => console.error('Error creating fundraiser:', error));
         });
@@ -156,7 +179,7 @@
         // Function to delete a fundraiser  Replace with actual API endpoint after linking to our Cpannels
         function deleteFundraiser(fundraiserId) {
             if (confirm('Are you sure you want to delete this fundraiser?')) {
-                fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`, {
+                fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`, {
                     method: 'DELETE'
                 })
                 .then(response => {
@@ -170,14 +193,17 @@
         // Function to populate the update form and display it  Replace with actual API endpoint after linking to our Cpannels
         function populateUpdateForm(fundraiserId) {
             // Fetch the specific fundraiser details
-            fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`)
+            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`)
                 .then(response => response.json())
                 .then(fundraiser => {
                     // Prefill form fields with fundraiser data
                     document.getElementById('update-id').value = fundraiser.FUNDRAISER_ID;
                     document.getElementById('update-caption').value = fundraiser.CAPTION;
                     document.getElementById('update-organizer').value = fundraiser.ORGANIZER;
-                    document.getElementById('update-status').value = fundraiser.ACTIVE ? '1' : '0';
+                    document.getElementById('update-target_funding').value = fundraiser.TARGET_FUNDING;
+                    document.getElementById('update-city').value = fundraiser.CITY;
+                    document.getElementById('update-category_id').value = fundraiser.CATEGORY_ID;
+                    document.getElementById('update-image').value = fundraiser.image;
 
                     // Show the update section when editing
                     document.getElementById('update-fundraiser-section').classList.remove('hidden');
@@ -188,20 +214,28 @@
         // Function to update an existing fundraiser 
         document.getElementById('update-fundraiser-form').addEventListener('submit', function(event) {
             event.preventDefault();
+
             const fundraiserId = document.getElementById('update-id').value;
             const caption = document.getElementById('update-caption').value;
             const organizer = document.getElementById('update-organizer').value;
-            const status = document.getElementById('update-status').value;
+            const target_funding = document.getElementById('update-target_funding').value;
+            const city = document.getElementById('update-city').value;
+            const category_id = document.getElementById('update-category_id').value;
+            const image = document.getElementById('update-image').value;
 
             // Call the PUT API to update the fundraiser  Replace with actual API endpoint after linking to our Cpannels
-            fetch(`http://localhost:3000/api/fundraisers/${fundraiserId}`, {
+            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ caption, organizer, status })
+                body: JSON.stringify({ caption, organizer, target_funding, city, category_id, image })
             })
             .then(response => response.json())
             .then(data => {
+
+                console.log('Updated Data:', data); // Debugging line
                 alert('Fundraiser updated successfully!');
+
+                // Fetch the updated list of fundraisers
                 fetchFundraisers();
 
                 // Hide the update section after submission
