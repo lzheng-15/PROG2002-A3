@@ -86,7 +86,7 @@
             }
 
             // Fetch fundraiser details from API (updated by Lu on 06/102/2024)
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donations`)
+            fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}/donations`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch fundraiser details');
@@ -145,7 +145,7 @@
                     date: date
                 };
 
-                fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donation`, {
+                fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}/donation`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

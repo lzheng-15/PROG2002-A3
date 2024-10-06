@@ -5,8 +5,16 @@ CREATE TABLE DONATION (
     AMOUNT DECIMAL(10, 2) NOT NULL,
     GIVER VARCHAR(255) NOT NULL,
     FUNDRAISER_ID INT NOT NULL,
-    FOREIGN KEY (FUNDRAISER_ID) REFERENCES FUNDRAISER(FUNDRAISER_ID)
+    FOREIGN KEY (FUNDRAISER_ID) REFERENCES fundraiser(FUNDRAISER_ID)
 );
+
+-- add 5 more records into FUNDRAISER table
+INSERT INTO `fundraiser` VALUES 
+(6, 'Phoenix Studios', 'Flames of Eternity', 300000.00, 75000.00, 'Tokyo', 1, 1, 'img/flames-of-eternity.jpg'),
+(7, 'Neon Games', 'Galactic Conquest', 700000.00, 200000.00, 'Berlin', 1, 4, 'img/galactic-conquest.jpg'),
+(8, 'Arcadia Interactive', 'Mystic Realms', 450000.00, 120000.00, 'London', 1, 3, 'img/mystic-realms.jpg'),
+(9, 'Ironclad Developers', 'Warriors of Valhalla', 900000.00, 300000.00, 'Oslo', 1, 2, 'img/warriors-of-valhalla.jpg'),
+(10, 'Silverlight Games', 'Empire Builder', 550000.00, 180000.00, 'Los Angeles', 1, 5, 'img/empire-builder.jpg');
 
 -- add 20 records into DONATION table
 INSERT INTO DONATION (DATE, AMOUNT, GIVER, FUNDRAISER_ID) VALUES
@@ -30,11 +38,3 @@ INSERT INTO DONATION (DATE, AMOUNT, GIVER, FUNDRAISER_ID) VALUES
 ('2024-01-18', 125.00, 'Lucas Walker', 9),
 ('2024-01-19', 175.00, 'Ethan Harris', 10),
 ('2024-01-20', 400.00, 'Amelia King', 10);
-
--- add 5 more records into FUNDRAISER table
-INSERT INTO `fundraiser` VALUES 
-(6, 'Phoenix Studios', 'Flames of Eternity', 300000.00, 75000.00, 'Tokyo', 1, 1, 'img/flames-of-eternity.jpg'),
-(7, 'Neon Games', 'Galactic Conquest', 700000.00, 200000.00, 'Berlin', 1, 4, 'img/galactic-conquest.jpg'),
-(8, 'Arcadia Interactive', 'Mystic Realms', 450000.00, 120000.00, 'London', 1, 3, 'img/mystic-realms.jpg'),
-(9, 'Ironclad Developers', 'Warriors of Valhalla', 900000.00, 300000.00, 'Oslo', 1, 2, 'img/warriors-of-valhalla.jpg'),
-(10, 'Silverlight Games', 'Empire Builder', 550000.00, 180000.00, 'Los Angeles', 1, 5, 'img/empire-builder.jpg');

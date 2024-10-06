@@ -7,8 +7,8 @@ app.use(cors());
 
 app.use(express.json());  // Middleware to parse incoming JSON requests
 
-// Define the port from environment variables or use 3000 as default
-const port = process.env.PORT || 3000;
+// Define the port from environment variables or use 3060 as default
+const port = process.env.PORT || 3060;
 
 // Start the server on the defined port
 app.listen(port, () => {

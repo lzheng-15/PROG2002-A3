@@ -68,7 +68,7 @@
     <script>
         // Function to fetch and display categories in the search form
         function loadCategories() {
-            fetch('http://localhost:3000/api/categories')
+            fetch('http://localhost:3060/api/categories')
                 .then(response => response.json())
                 .then(categories => {
                     const categorySelect = document.getElementById('search-category');
@@ -94,7 +94,7 @@
                 category_id: category_id
             }).toString();
 
-            fetch(`http://localhost:3000/api/search?${queryParams}`)
+            fetch(`http://localhost:3060/api/search?${queryParams}`)
                 .then(response => response.json())
                 .then(fundraisers => {
                     const resultsList = document.getElementById('search-results-list');

@@ -125,7 +125,7 @@
     <script>
         // Function to fetch all fundraisers 
         function fetchFundraisers() {
-            fetch('http://localhost:3000/api/fundraisers') // Replace with actual API endpoint after linking to our Cpannels
+            fetch('http://localhost:3060/api/fundraisers') // Replace with actual API endpoint after linking to our Cpannels
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.querySelector('#fundraisers-table tbody');
@@ -163,7 +163,7 @@
             const image = document.getElementById('image').value;
 
             // Call the POST API to create a new fundraiser  Replace with actual API endpoint after linking to our Cpannels
-            fetch('http://localhost:3000/api/fundraiser', {
+            fetch('http://localhost:3060/api/fundraiser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ caption, organizer, target_funding, city, category_id, image})
@@ -179,7 +179,7 @@
         // Function to delete a fundraiser  Replace with actual API endpoint after linking to our Cpannels
         function deleteFundraiser(fundraiserId) {
             if (confirm('Are you sure you want to delete this fundraiser?')) {
-                fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`, {
+                fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}`, {
                     method: 'DELETE'
                 })
                 .then(response => {
@@ -193,7 +193,7 @@
         // Function to populate the update form and display it  Replace with actual API endpoint after linking to our Cpannels
         function populateUpdateForm(fundraiserId) {
             // Fetch the specific fundraiser details
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`)
+            fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}`)
                 .then(response => response.json())
                 .then(fundraiser => {
                     // Prefill form fields with fundraiser data
@@ -224,7 +224,7 @@
             const image = document.getElementById('update-image').value;
 
             // Call the PUT API to update the fundraiser  Replace with actual API endpoint after linking to our Cpannels
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}`, {
+            fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ caption, organizer, target_funding, city, category_id, image })

@@ -74,7 +74,7 @@
             }
 
             // Fetch fundraiser details including donations using API created for Part 2 (updated by Lu on 06/10/2024)
-            fetch(`http://localhost:3000/api/fundraiser/${fundraiserId}/donations`)
+            fetch(`http://localhost:3060/api/fundraiser/${fundraiserId}/donations`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to fetch fundraiser details');
